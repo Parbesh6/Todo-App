@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import task 
+from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
 def home(request):
