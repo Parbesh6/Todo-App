@@ -3,6 +3,7 @@ from .models import task
 from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
+@user_passes_test(lambda u: False)
 def home(request):
     if request.method == 'POST':
         title = request.POST.get('title')
