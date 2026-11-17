@@ -1,9 +1,8 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import task 
-from django.contrib.auth.decorators import user_passes_test
+from django.http import HttpResponseForbidden
 
 # Create your views here.
-@user_passes_test(lambda u: False)
 def home(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -13,7 +12,6 @@ def home(request):
         task.objects.create(title=title, description=description, completed=completed)
 
         return redirect('home')
-        
     return render(request, 'home.html', {'tasks': task.objects.all()})
 
 def update(request, task_id):
