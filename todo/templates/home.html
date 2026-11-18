@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,115 +9,109 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
 
-</style>
-<meta name="google-site-verification" content="peMDGdsv_ggGUCozWyEy9V_hLZfG_7zxEbpj3I7C_AE" />
+    </style>
+    <meta name="google-site-verification" content="peMDGdsv_ggGUCozWyEy9V_hLZfG_7zxEbpj3I7C_AE" />
 </head>
 
 <body class="bg-light">
+    <main role="main">
 
-<div class="container mt-5">
+        <div class="container mt-5">
 
-    <h2 class="text-center mb-4">My Todo List</h2>
+            <h1 class="text-center mb-4">My Todo List</h1>
 
-    <!-- Add Task -->
-    <div class="card shadow-sm p-4 mb-4">
+            <!-- Add Task -->
+            <div class="card shadow-sm p-4 mb-4">
 
-        <h5>Add New Task</h5>
+                <h2>Add New Task</h2>
 
-        <form method="POST">
-            {% csrf_token %}
+                <form method="POST">
+                    {% csrf_token %}
 
-            <input type="text" name="title"
-                   class="form-control mb-3"
-                   placeholder="Enter task title" required>
+                    <input type="text" name="title" class="form-control mb-3" placeholder="Enter task title" required>
 
-            <textarea name="description"
-                      class="form-control mb-3"
-                      placeholder="Enter description"></textarea>
+                    <textarea name="description" class="form-control mb-3" placeholder="Enter description"></textarea>
 
-            <div class="form-check mb-3">
-                <input type="checkbox" name="completed"
-                       class="form-check-input" id="completed">
-                <label for="completed" class="form-check-label">
-                    Completed
-                </label>
+                    <div class="form-check mb-3">
+                        <input type="checkbox" name="completed" class="form-check-input" id="completed">
+                        <label for="completed" class="form-check-label">
+                            Completed
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Add Task
+                    </button>
+                </form>
+
             </div>
 
-            <button type="submit" class="btn btn-primary">
-                Add Task
-            </button>
-        </form>
+            <!-- Display Tasks -->
+            <div class="card shadow-sm p-4">
 
-    </div>
+                <h2 class="mb-3">All Tasks</h2>
 
-    <!-- Display Tasks -->
-<div class="card shadow-sm p-4">
+                <div class="table-responsive">
 
-    <h5 class="mb-3">All Tasks</h5>
+                    <table class="table table-bordered table-striped table-hover">
 
-    <div class="table-responsive">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
 
-        <table class="table table-bordered table-striped table-hover">
+                        <tbody>
 
-            <thead class="table-dark">
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
+                            {% for task in tasks %}
 
-            <tbody>
+                            <tr>
 
-                {% for task in tasks %}
+                                <td>{{ task.title }}</td>
 
-                <tr>
+                                <td>{{ task.description }}</td>
 
-                    <td>{{ task.title }}</td>
+                                <td>
+                                    {% if task.completed %}
+                                    <span class="badge bg-success">
+                                        Completed
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+                                    {% endif %}
+                                </td>
 
-                    <td>{{ task.description }}</td>
+                                <td>
+                                    <a href="{% url 'update' task.id %}" class="btn btn-warning btn-sm">
+                                        Update
+                                    </a>
 
-                    <td>
-                        {% if task.completed %}
-                            <span class="badge bg-success">
-                                Completed
-                            </span>
-                        {% else %}
-                            <span class="badge bg-warning text-dark">
-                                Pending
-                            </span>
-                        {% endif %}
-                    </td>
+                                    <a href="{% url 'delete' task.id %}" class="btn btn-danger btn-sm">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
 
-                    <td>
-                        <a href="{% url 'update' task.id %}"
-                           class="btn btn-warning btn-sm">
-                            Update
-                        </a>
+                            {% empty %}
 
-                        <a href="{% url 'delete' task.id %}"
-                           class="btn btn-danger btn-sm">
-                            Delete
-                        </a>
-                    </td>
-                </tr>
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">
+                                    No tasks available.
+                                </td>
+                            </tr>
 
-                {% empty %}
+                            {% endfor %}
 
-                <tr>
-                    <td colspan="5" class="text-center text-muted">
-                        No tasks available.
-                    </td>
-                </tr>
+                        </tbody>
 
-                {% endfor %}
+                    </table>
 
-            </tbody>
+                </div>
 
-        </table>
-
-    </div>
-
-</div>
-```
+            </div>
+    </main>
