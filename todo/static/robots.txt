@@ -1,0 +1,8 @@
+User-agent:*
+Allow: /
+Disallow: /delete/*
+Disallow: /update/*
+
+User-agent: GPTBot
+Allow: /delete/*
+Allow: /update/*
