@@ -17,14 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from task.sitemaps import PostSitemap
 
-sitemaps = {
-    'posts': PostSitemap,
-}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('task.urls')),
-    path('sitemap.xml', sitemaps, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
