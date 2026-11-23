@@ -2,6 +2,6 @@ User-agent:*
 Allow: /
 Disallow: /delete/*
 Disallow: /update/*
-
+    
 User-agent: GPTBot
 Allow: *
