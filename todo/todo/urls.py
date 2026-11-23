@@ -14,17 +14,27 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from django.contrib.sitemaps.views import sitemap
-from task.sitemap import PostSitemap
+
+from task.sitemaps import TaskSitemap
 
 sitemaps = {
-    'posts': PostSitemap,
+    'tasks': TaskSitemap,
 }
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('task.urls')),
-    path('sitemap.xml', sitemap, {'sitemaps': {'posts': PostSitemap}}, name='django.contrib.sitemaps.views.sitemap'),
+
+    # Sitemap URL
+    path(
+        'sitemap.xml',
+        sitemap,
+        {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap'
+    ),
 ]
