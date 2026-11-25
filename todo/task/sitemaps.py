@@ -7,3 +7,15 @@ class TaskSitemap(Sitemap):
 
     def items(self):
         return task.objects.all()
+
+
+class PageSitemap(Sitemap):
+    changefreq = "monthly"
+    priority = 0.5
+
+    def items(self):
+        return ['home']  # Add other static pages if needed
+
+    def location(self, item):
+        from django.urls import reverse
+        return reverse(item)
